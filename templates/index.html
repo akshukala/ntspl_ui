@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>LedTek</title>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/dropdown_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index-style.css' %}">
+    
+    <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'js/metisMenu.min.js' %}"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+</head>
+
+<body background="{% static 'images/streetlamp.jpg' %}">
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">LedTek </a>
+            </div>
+            <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>{{request.user}} <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/logout/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+        </nav>
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">LedTek Dashboard</h1>
+                </div>
+            </div>
+            <div class="row text">
+                <div class="col-md-4">
+                  <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="round-button">
+                          <div class="round-red-circle">
+                            <a href="/monitor/" class="round-button"><i class="fa fa-television fa-3x"></i></a>
+                          </div>
+                        </div>
+                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Monitor</b></h4></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="round-button">
+                          <div class="round-lightblue-circle">
+                            <a href="/logs/" class="round-button"><i class="fa fa-search fa-3x"></i></a>
+                          </div>
+                        </div>
+                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Logs</b></h4></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="row">
+                     <div class="col-md-2">
+                        <div class="round-button">
+                          <div class="round-green-circle">
+                            <a href="/all/" class="round-button"><i class="fa fa-binoculars fa-3x"></i></a>
+                          </div>
+                        </div>
+                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>View All</b></h4></div>
+                    </div>
+                    {% if is_admin %}
+                    <div class="col-md-2">
+                        <div class="round-button">
+                          <div class="round-yellow-circle">
+                            <a href="/configure/" class="round-button"><i class="fa fa-pencil fa-3x"></i></a>
+                          </div>
+                        </div>
+                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Configure</b></h4></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="round-button">
+                          <div class="round-primary-circle">
+                            <a href="/userdata/" class="round-button"><i class="fa fa-users fa-3x" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Manage User</b></h4></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="round-button">
+                          <div class="round-darkyellow-circle">
+                            <a href="/control/" class="round-button"><i class="fa fa-cogs fa-3x"></i></a>
+                          </div>
+                        </div>
+                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Control</b></h4></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="round-button">
+                          <div class="round-purple-circle">
+                            <a href="/alarm/" class="round-button"><i class="fa fa-bell fa-3x"></i></a>
+                          </div>
+                        </div>
+                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Alarms</b></h4></div>
+                    </div>
+                    {% endif %}
+                   
+                    <div class="col-md-2"></div>
+                  </div>
+                  
+                </div>
+            </div>
+
+            <!-- <div class="row text">
+                <div class="col-lg-3 col-md-6 col-md-offset-1">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    
+                                    <div>View All</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/all/">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-television fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    
+                                    <div>Monitor</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/monitor/">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-lightblue">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-list fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    
+                                    <div>Logs</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/logs/">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+ 
+</body>
+</html>

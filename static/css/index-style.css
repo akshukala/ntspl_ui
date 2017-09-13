@@ -1,0 +1,167 @@
+.panel-lightblue {
+            border-color: #80bfff;
+        }
+        .panel-lightblue > .panel-heading {
+          border-color: #80bfff;
+          color: white;
+          background-color: #80bfff;
+        }
+        .panel-lightblue > a {
+          color: #80bfff;
+        }
+        .panel-lightblue > a:hover {
+          color: #0073e6;
+        }
+        .panel-darkyellow {
+            border-color: #ffd633;
+        }
+        .panel-darkyellow > .panel-heading {
+          border-color: #ffd633;
+          color: white;
+          background-color: #ffd633;
+        }
+        .panel-darkyellow > a {
+          color: #ffd633;
+        }
+        .panel-darkyellow > a:hover {
+          color: #e6b800;
+        }
+
+        .panel-purple {
+            border-color: #e600ac;
+        }
+        .panel-purple > .panel-heading {
+          border-color: #e600ac;
+          color: white;
+          background-color: #e600ac;
+        }
+        .panel-purple > a {
+          color: #e600ac;
+        }
+        .panel-purple > a:hover {
+          color: #cc0099;
+        }
+
+        .round-button {
+          width:100%;
+        }
+        .round-button a {
+            display:block;
+          float:left;
+          width:100%;
+          padding-top:50%;
+            padding-bottom:50%;
+          line-height:1em;
+          margin-top:-0.5em;
+            
+          text-align:center;
+          color:#e2eaf3;
+            font-family:Verdana;
+            font-size:1.2em;
+            font-weight:bold;
+            text-decoration:none;
+        }
+        .round-yellow-circle {
+          width: 100%;
+          height:0;
+          padding-bottom: 100%;
+            border-radius: 50%;
+          border:10px solid #f5c88a;
+            overflow:hidden;
+            
+            background: #f0ad4e; 
+            box-shadow: 2px 6px 10px gray;
+        }
+        .round-yellow-circle:hover {
+          background:#ed9c2c;
+        }
+
+        .round-primary-circle {
+          width: 100%;
+          height:0;
+          padding-bottom: 100%;
+            border-radius: 50%;
+          border:10px solid #4c91cd;
+            overflow:hidden;
+            
+            background: #337ab7; 
+            box-shadow: 2px 6px 10px gray;
+        }
+        .round-primary-circle:hover {
+          background:#2d6a9f;
+        }
+
+        .round-darkyellow-circle {
+          width: 100%;
+          height:0;
+          padding-bottom: 100%;
+            border-radius: 50%;
+          border:10px solid #ffe066;
+            overflow:hidden;
+            
+            background: #ffd633; 
+            box-shadow: 2px 6px 10px gray;
+        }
+        .round-darkyellow-circle:hover {
+          background:#ffcc00;
+        }
+
+        .round-purple-circle {
+          width: 100%;
+          height:0;
+          padding-bottom: 100%;
+            border-radius: 50%;
+          border:10px solid #df9fbf;
+            overflow:hidden;
+            
+            background: #cc6699; 
+            box-shadow: 2px 6px 10px gray;
+        }
+        .round-purple-circle:hover {
+          background:#ac3973;
+        }
+
+        .round-green-circle {
+          width: 100%;
+          height:0;
+          padding-bottom: 100%;
+            border-radius: 50%;
+          border:10px solid #83c983;
+            overflow:hidden;
+            
+            background: #5cb85c; 
+            box-shadow: 2px 6px 10px gray;
+        }
+        .round-green-circle:hover {
+          background:#3e8e3e;
+        }
+
+        .round-red-circle {
+          width: 100%;
+          height:0;
+          padding-bottom: 100%;
+            border-radius: 50%;
+          border:10px solid #e38582;
+            overflow:hidden;
+            
+            background: #d9534f; 
+            box-shadow: 2px 6px 10px gray;
+        }
+        .round-red-circle:hover {
+          background:#bc2e29;
+        }
+
+        .round-lightblue-circle {
+          width: 100%;
+          height:0;
+          padding-bottom: 100%;
+            border-radius: 50%;
+          border:10px solid #b3d9ff;
+            overflow:hidden;
+            
+            background: #80bfff; 
+            box-shadow: 2px 6px 10px gray;
+        }
+        .round-lightblue-circle:hover {
+          background:#3399ff;
+        }
