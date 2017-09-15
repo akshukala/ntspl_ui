@@ -1,215 +1,368 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    {% load staticfiles %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>LedTek</title>
-
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/dropdown_style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/index-style.css' %}">
-    
-    <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
-    <script src="{% static 'js/metisMenu.min.js' %}"></script>
-    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-</head>
-
-<body background="{% static 'images/streetlamp.jpg' %}">
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">LedTek </a>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<style type="text/css">
+    ul.ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+<br><br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-1">
+            <div class="form-group form-inline">
+                <label>Select City:&emsp;</label>
+                <input type="text" name="city" id="city" class="form-control input-md ac_city">&emsp;
+                <button id='add_city' class="btn btn-primary" data-toggle="modal" data-target="#cityModal">Add City</button>
             </div>
-            <!-- /.navbar-header -->
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>{{request.user}} <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="/logout/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-
-        </nav>
-        <div class="container">
-            <br>
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">LedTek Dashboard</h1>
-                </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group form-inline">
+                <label>Select Junction:&emsp;</label>
+                <select class="form-control" id="junction">
+                    <option value='select'>Select</option>
+                </select>&emsp;
+                <button id='add_junction' class="btn btn-primary" data-toggle="modal" data-target="#junctionModal">Add Junction</button>
             </div>
-            <div class="row text">
-                <div class="col-md-4">
-                  <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
-                        <div class="round-button">
-                          <div class="round-red-circle">
-                            <a href="/monitor/" class="round-button"><i class="fa fa-television fa-3x"></i></a>
-                          </div>
-                        </div>
-                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Monitor</b></h4></div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="round-button">
-                          <div class="round-lightblue-circle">
-                            <a href="/logs/" class="round-button"><i class="fa fa-search fa-3x"></i></a>
-                          </div>
-                        </div>
-                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Logs</b></h4></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="row">
-                     <div class="col-md-2">
-                        <div class="round-button">
-                          <div class="round-green-circle">
-                            <a href="/all/" class="round-button"><i class="fa fa-binoculars fa-3x"></i></a>
-                          </div>
-                        </div>
-                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>View All</b></h4></div>
-                    </div>
-                    {% if is_admin %}
-                    <div class="col-md-2">
-                        <div class="round-button">
-                          <div class="round-yellow-circle">
-                            <a href="/configure/" class="round-button"><i class="fa fa-pencil fa-3x"></i></a>
-                          </div>
-                        </div>
-                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Configure</b></h4></div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="round-button">
-                          <div class="round-primary-circle">
-                            <a href="/userdata/" class="round-button"><i class="fa fa-users fa-3x" aria-hidden="true"></i></a>
-                          </div>
-                          <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Manage User</b></h4></div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="round-button">
-                          <div class="round-darkyellow-circle">
-                            <a href="/control/" class="round-button"><i class="fa fa-cogs fa-3x"></i></a>
-                          </div>
-                        </div>
-                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Control</b></h4></div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="round-button">
-                          <div class="round-purple-circle">
-                            <a href="/alarm/" class="round-button"><i class="fa fa-bell fa-3x"></i></a>
-                          </div>
-                        </div>
-                        <div class="text-center" style="font-family:Arial, Helvetica, sans-serif;font-size:1.8em;font-weight:bold;"><h4><b>Alarms</b></h4></div>
-                    </div>
-                    {% endif %}
-                   
-                    <div class="col-md-2"></div>
-                  </div>
-                  
-                </div>
-            </div>
-
-            <!-- <div class="row text">
-                <div class="col-lg-3 col-md-6 col-md-offset-1">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    
-                                    <div>View All</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="/all/">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-television fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    
-                                    <div>Monitor</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="/monitor/">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-lightblue">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-list fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    
-                                    <div>Logs</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="/logs/">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="well well-sm">
+                <table id="time_table" class="table table-striped table-bordered text-center table-responsive">
+                    <tr>
+                        <td>Time</td>
+                        <td>HR:MN</td>
+                        <td>DT</td>
+                        <td>MT</td>
+                        <td>YR</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well well-sm">
+                <table id="cycletime_table" class="table table-striped table-bordered text-center table-responsive">
+                    <tr>
+                        <td>Cycle Time</td>
+                        <td>HR:MN</td>
+                        <td>DT</td>
+                        <td>MT</td>
+                        <td>YR</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well well-sm">
+                <table id="cycleelapse_table" class="table table-striped table-bordered text-center table-responsive">
+                    <tr>
+                        <td>Cycle Elapsed Time</td>
+                        <td>HR:MN</td>
+                        <td>DT</td>
+                        <td>MT</td>
+                        <td>YR</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-2">
+            <div class="well well-sm">
+                <table id="automanual_table" class="table table-striped table-bordered text-center table-responsive">
+                    <tr>
+                        <td>Mode</td>
+                        <td>HR:MN</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-offset-2">
+            <div class="well well-sm">
+                <table id="workingon_table" class="table table-striped table-bordered text-center table-responsive">
+                    <tr>
+                        <td>Working On</td>
+                        <td>Blinker</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table id="junction_table" class="table table-striped table-bordered table-condensed text-center table-responsive">
+                <thead>
+                    <tr>
+                        <td><b>Phase</b></td>
+                        <td><b>Normal Time</b></td>
+                        <td><b>Step Elapsed Time</b></td>
+                        <td><b>Status</b></td>
+                    </tr>
+                </thead>
+                <tbody id="junction_table_body">
+                    <tr>
+                        <td><b>Phase 1</b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><i class="fa fa-circle fa-5x" aria-hidden="true" style="color: #FFC200;"></i><h4 style="color: #FFC200;">Amber</h4></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
- 
-</body>
-</html>
+
+<!--City Modal -->
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="cityModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Create City</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="errors_modal"></div>
+                            <div class="form-group form-inline text-center">
+                                <div class="col-md-6">
+                                    <label>City Name:</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="city_name" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="save_city" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Junction Modal-->
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="junctionModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Create Junction</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                          <div class="errors_modal"></div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>City Name:</label>
+                                    <input type="text" id="select_city" class="form-control input-md ac_city">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Junction Name:</label>
+                                    <input id="junction_name" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="save_junction" class="btn btn-primary">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script type="text/javascript">
+        $(document).ready(function(){
+            $("#junction").prop("disabled", true);
+            $(".ac_city").autocomplete({
+                source: function(request, response) {
+                    
+                    $.ajax({
+                        url: "{{traffic_service_url}}"+"city/",
+                        type : "get",
+                        headers: {'X-Authorization-Token' : '{{request.session.userservice_key}}',
+                                    'content_type':'application/json'},
+                        dataType: 'json',
+                        data :{
+                            "term": request.term
+                        },
+                        success:function(data){
+                            console.log(data);
+                            var city_data=[];
+                            var result = data['responseData'];
+                            for (i=0;i<result.length;i++){
+                                city_data.push(result[i]['city']);
+                            }
+                            response(city_data);
+                            $("#junction").prop("disabled", false);
+                        }
+                    });
+                },
+                change: function(event,ui){
+                        if (ui.item==null){
+                            $("#city").val('');
+                            $("#city").focus();
+                        }
+                        var city = $("#city").val();
+                        $.ajax(
+                        {
+                            type: 'get',
+                            url: "{{traffic_service_url}}"+"junction/?type=1&city="+city,
+                            headers: {'X-Authorization-Token' : "{{request.session.userservice_key}}",
+                                            'content_type':'application/json'},
+                            dataType: 'json',
+                            success : function(data)
+                                    {
+                                        result = data['responseData'];
+                                        console.log(result);
+                                        for(i=0;i<result.length;i++){
+                                            data = "<option value='"+result[i]['junction_id']+"'>"+result[i]['junction_name']+"</option>";
+                                            $("#junction").append(data);
+                                        }
+                                        
+                                    },
+                                    error : function(error)
+                                    {
+                                        window.alert(error);
+                                    },
+                        });
+                    }
+            });
+
+            $("#save_city").click(function(){
+                var errors=[];
+                var city_name = $("#city_name").val();
+                $("#city_name").css({"border-color": "#ccc"});
+                if (city_name.length == 0) {
+                    errors[errors.length] = "Enter City Name.";
+                    $("#city_name").css({"border-color": "#ff4c4c"});
+                    $("#city_name").focus();
+                }
+                if (errors.length > 0) {
+                    reportErrorsModal(errors);
+                    return false;
+                }
+                $.ajax(
+                    {
+                        type:'post',
+                        url: "{{traffic_service_url}}"+"city/",
+                        headers: {'X-Authorization-Token' : '{{request.session.userservice_key}}',
+                                    'content_type':'application/json'},
+                        dataType: 'json',
+                        data: JSON.stringify({ 'city_name': city_name}),
+                        success : function(data)
+                            {   
+                                if (data['responseData']['responseCode'] == 200) {
+                                    var message;
+                                    message = data['responseData']['Message'];
+                                    swal({
+                                        title: "Success!!!",
+                                        text: message,
+                                        type: "success",
+                                    },
+                                    function(){
+                                        location.reload();
+                                    });
+                                }else {
+                                    var message;
+                                    message = data['responseData']['Message'];
+                                    $("#city_name").val('');
+                                    swal("Error!!!", message, "error");
+                                }
+                                console.log(data)
+                                
+                            },
+                        error : function(error)
+                                {
+                                    window.alert(error['responseText'])
+                                }
+                    });
+                });
+
+            $("#save_junction").click(function(){
+                var errors=[];
+                var city_name = $("#select_city").val();
+                var junction_name = $("#junction_name").val();
+
+                $("#select_city").css({"border-color": "#ccc"});
+                $("#junction_name").css({"border-color": "#ccc"});
+                
+                if (city_name.length == 0) {
+                    errors[errors.length] = "Enter City Name.";
+                    $("#select_city").css({"border-color": "#ff4c4c"});
+                    $("#select_city").focus();
+                }
+                if (junction_name.length == 0) {
+                    errors[errors.length] = "Enter Junction Name.";
+                    $("#junction_name").css({"border-color": "#ff4c4c"});
+                    $("#junction_name").focus();
+                }
+                if (errors.length > 0) {
+                    reportErrorsModal(errors);
+                    return false;
+                }
+                $.ajax(
+                    {
+                        type:'post',
+                        url: "{{traffic_service_url}}"+"junction/",
+                        headers: {'X-Authorization-Token' : '{{request.session.userservice_key}}',
+                                    'content_type':'application/json'},
+                        dataType: 'json',
+                        data: JSON.stringify({ 'city': city_name,
+                                                'junction_name': junction_name}),
+                        success : function(data)
+                            {   
+                                if (data['responseData']['responseCode'] == 200) {
+                                    var message;
+                                    message = data['responseData']['Message'];
+                                    swal({
+                                        title: "Success!!!",
+                                        text: message,
+                                        type: "success",
+                                    },
+                                    function(){
+                                        location.reload();
+                                    });
+                                }else {
+                                    var message;
+                                    message = data['responseData']['Message'];
+                                    $("#select_city").val('');
+                                    $("#junction_name").val('');
+                                    swal("Error!!!", message, "error");
+                                }
+                                console.log(data)
+                                
+                            },
+                        error : function(error)
+                                {
+                                    window.alert(error['responseText'])
+                                }
+                    });
+                });
+
+            function reportErrorsModal(errors){
+                                $('.errors_modal').empty();
+                                var msg = [];
+                                for (var i = 0; i<errors.length; i++) {
+                                    var numError = i + 1;
+                                    msg [i]= "\n" + numError + ". " + errors[i] ;
+                                }
+                                $.each(msg, function(){
+                                    $('.errors_modal').append("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>" + this +"</div>");
+                                });
+                        }
+        });
+</script>
+{% endblock %}

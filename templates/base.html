@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="csrf-token" content="{% csrf_token %}">
-        <title>LedTek</title>
+        <title>NTSPL</title>
 
         <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
         <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
@@ -42,8 +42,8 @@
         <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1QN-UnB0t72pRJIJw9-H4V97ojXJaW9E"></script>
-        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<!--         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1QN-UnB0t72pRJIJw9-H4V97ojXJaW9E"></script>
+ -->        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     </head>
 
     <body>
@@ -56,11 +56,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">LedTek </a>
+                    <a class="navbar-brand" href="/">Nucleonics Traffic Solutions Pvt Ltd </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/all/">View All</a></li>
+                        <!-- <li><a href="/all/">View All</a></li>
                         {% if is_admin %}
                         <li><a href="/configure/">Configure</a></li>
                         <li><a href="/userdata/">User</a></li>
@@ -68,7 +68,7 @@
                         <li><a href="/alarm/">Alarm</a></li>
                         {% endif %}
                         <li><a href="/monitor/">Monitor</a></li>
-                        <li><a href="/logs/">Logs</a></li>
+                        <li><a href="/logs/">Logs</a></li> -->
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-user fa-fw"></i>{{request.user}} <i class="fa fa-caret-down"></i>
@@ -94,38 +94,7 @@
                 $('li.active').removeClass('active');
                 $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
                 
-                $.ajax(
-                {
-                    type:'get',
-                    url: "/getFault/",
-                    headers: {'content_type':'application/json'},
-                    dataType: 'json',
-                    success : function(result)
-                        {   
-                            console.log(result['content']);
-                            if(result['content'].length >0){
-                                $.notify({
-                                    // options
-                                    icon: 'glyphicon glyphicon-warning-sign',
-                                    title: 'Fault Alert',
-                                    message: 'You Have ' + result['content'].length + ' Fault Alerts Pending to See.',
-                                    url: '/alarm/',
-                                    target: '_blank',
-                                    delay: 10000,
-                                    timer: 1000,
-                                },{
-                                    // settings
-                                    type: 'danger',
-                                    allow_dismiss: true,
-                                    url_target: '_blank'
-                                });
-                            }
-                        },
-                    error : function(error)
-                        {
-                            window.alert(error['responseText'])
-                        }
-                    });
+                
             });
         </script>
     </body>

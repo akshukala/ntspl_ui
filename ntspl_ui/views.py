@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import (
 )
 from django.conf import settings
 from django.contrib.auth.views import login as login_view
+from django.contrib.auth import logout
 
 def process_user_service_token(request):
     '''
@@ -21,8 +22,9 @@ def process_user_service_token(request):
         url = settings.USER_SERVICE_URL + "uservalidation/"
 
         payload = {
-            "mobileNo": username,
-            "password": password
+            "emailId": username,
+            "password": password,
+            "rememberMe": True
         }
 
         headers = {'content-type': 'application/json'}
@@ -30,7 +32,7 @@ def process_user_service_token(request):
         r = requests.post(url, data=json.dumps(payload), headers=headers,
                           verify=False)
         #if username/password is correct then only below condition is satisfied
-        print r.content
+        
         if r.status_code == 200 and not "errorCode" in json.loads(r.content):
         	
             key = 'session'
