@@ -186,23 +186,6 @@
 <script type="text/javascript">
         $(document).ready(function(){
             $("#junction").prop("disabled", true);
-            $.ajax(
-                        {
-                            type: 'get',
-                            url: "{{user_service_url}}"+"ping/",
-                            headers: {'X-Authorization-Token' : "{{request.session.userservice_key}}",
-                                            'content_type':'application/json'},
-                            dataType: 'json',
-                            success : function(data)
-                                    {
-                                        //result = data['responseData'];
-                                        console.log(data);
-                                    },
-                                    error : function(error)
-                                    {
-                                        window.alert(error);
-                                    },
-                        });
             $(".ac_city").autocomplete({
                 source: function(request, response) {
                     
