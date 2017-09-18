@@ -43,7 +43,7 @@ def process_user_service_token(request):
 
 @login_required(login_url="/login/")        	
 def index(request):
-	return render_to_response("base.html",locals(),RequestContext(request))
+	return render_to_response("index.html",locals(),RequestContext(request))
 
 def ntspl_login(request, *args, **kwargs):
     response = login_view(request, *args, **kwargs)
