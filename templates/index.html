@@ -97,6 +97,7 @@
                 <thead>
                     <tr>
                         <td><b>Phase</b></td>
+                        <td><b>Road Name</b></td>
                         <td><b>Normal Time</b></td>
                         <td><b>Step Elapsed Time</b></td>
                         <td><b>Status</b></td>
@@ -107,7 +108,8 @@
                         <td><b>Phase 1</b></td>
                         <td><b></b></td>
                         <td><b></b></td>
-                        <td><i class="fa fa-circle fa-5x" aria-hidden="true" style="color: #FFC200;"></i><h4 style="color: #FFC200;">Amber</h4></td>
+                        <td><b></b></td>
+                        <td><i class="fa fa-circle fa-3x" aria-hidden="true" style="color: #FFC200;"></i><h4 style="color: #FFC200;">Amber</h4></td>
                     </tr>
                 </tbody>
             </table>
@@ -172,6 +174,54 @@
                                 <div class="form-group form-inline">
                                     <label>Junction Name:</label>
                                     <input id="junction_name" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 1:</label>
+                                    <input id="road_name1" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 2:</label>
+                                    <input id="road_name2" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 3:</label>
+                                    <input id="road_name3" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 4:</label>
+                                    <input id="road_name4" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 5:</label>
+                                    <input id="road_name5" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 6:</label>
+                                    <input id="road_name6" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 7:</label>
+                                    <input id="road_name7" class="form-control input-md" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-inline">
+                                    <label>Road Name 8:</label>
+                                    <input id="road_name8" class="form-control input-md" type="text">
                                 </div>
                             </div>
                         </div>
@@ -295,10 +345,26 @@
                 var errors=[];
                 var city_name = $("#select_city").val();
                 var junction_name = $("#junction_name").val();
+                var road_name1 = $("#road_name1").val();
+                var road_name2 = $("#road_name2").val();
+                var road_name3 = $("#road_name3").val();
+                var road_name4 = $("#road_name4").val();
+                var road_name5 = $("#road_name5").val();
+                var road_name6 = $("#road_name6").val();
+                var road_name7 = $("#road_name7").val();
+                var road_name8 = $("#road_name8").val();
 
                 $("#select_city").css({"border-color": "#ccc"});
                 $("#junction_name").css({"border-color": "#ccc"});
-                
+                $("#road_name1").css({"border-color": "#ccc"});
+                $("#road_name2").css({"border-color": "#ccc"});
+                $("#road_name3").css({"border-color": "#ccc"});
+                $("#road_name4").css({"border-color": "#ccc"});
+                $("#road_name5").css({"border-color": "#ccc"});
+                $("#road_name6").css({"border-color": "#ccc"});
+                $("#road_name7").css({"border-color": "#ccc"});
+                $("#road_name8").css({"border-color": "#ccc"});
+
                 if (city_name.length == 0) {
                     errors[errors.length] = "Enter City Name.";
                     $("#select_city").css({"border-color": "#ff4c4c"});
@@ -308,6 +374,46 @@
                     errors[errors.length] = "Enter Junction Name.";
                     $("#junction_name").css({"border-color": "#ff4c4c"});
                     $("#junction_name").focus();
+                }
+                if (road_name1.length == 0) {
+                    errors[errors.length] = "Enter Road Name 1.";
+                    $("#road_name1").css({"border-color": "#ff4c4c"});
+                    $("#road_name1").focus();
+                }
+                if (road_name2.length == 0) {
+                    errors[errors.length] = "Enter Road Name 2.";
+                    $("#road_name2").css({"border-color": "#ff4c4c"});
+                    $("#road_name2").focus();
+                }
+                if (road_name3.length == 0) {
+                    errors[errors.length] = "Enter Road Name 3.";
+                    $("#road_name3").css({"border-color": "#ff4c4c"});
+                    $("#road_name3").focus();
+                }
+                if (road_name4.length == 0) {
+                    errors[errors.length] = "Enter Road Name 4.";
+                    $("#road_name4").css({"border-color": "#ff4c4c"});
+                    $("#road_name4").focus();
+                }
+                if (road_name5.length == 0) {
+                    errors[errors.length] = "Enter Road Name 5.";
+                    $("#road_name5").css({"border-color": "#ff4c4c"});
+                    $("#road_name5").focus();
+                }
+                if (road_name6.length == 0) {
+                    errors[errors.length] = "Enter Road Name 6.";
+                    $("#road_name6").css({"border-color": "#ff4c4c"});
+                    $("#road_name6").focus();
+                }
+                if (road_name7.length == 0) {
+                    errors[errors.length] = "Enter Road Name 7.";
+                    $("#road_name7").css({"border-color": "#ff4c4c"});
+                    $("#road_name7").focus();
+                }
+                if (road_name8.length == 0) {
+                    errors[errors.length] = "Enter Road Name 8.";
+                    $("#road_name8").css({"border-color": "#ff4c4c"});
+                    $("#road_name8").focus();
                 }
                 if (errors.length > 0) {
                     reportErrorsModal(errors);
@@ -321,7 +427,16 @@
                                     'content_type':'application/json'},
                         dataType: 'json',
                         data: JSON.stringify({ 'city': city_name,
-                                                'junction_name': junction_name}),
+                                                'junction_name': junction_name,
+                                                'road_name1': road_name1,
+                                                'road_name2': road_name2,
+                                                'road_name3': road_name3,
+                                                'road_name4': road_name4,
+                                                'road_name5': road_name5,
+                                                'road_name6': road_name6,
+                                                'road_name7': road_name7,
+                                                'road_name8': road_name8
+                                            }),
                         success : function(data)
                             {   
                                 if (data['responseData']['responseCode'] == 200) {
@@ -343,7 +458,6 @@
                                     swal("Error!!!", message, "error");
                                 }
                                 console.log(data)
-                                
                             },
                         error : function(error)
                                 {
