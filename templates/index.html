@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
+<meta http-equiv="refresh" content="60">
 <style type="text/css">
     ul.ui-autocomplete {
         z-index: 1100;
@@ -37,8 +38,8 @@
                         <td>Time</td>
                         <td id="hr_min"></td>
                         <td id="day"></td>
-                        <td id="month"></td>
-                        <td id="year"></td>
+                        <!-- <td id="month"></td>
+                        <td id="year"></td> -->
                     </tr>
                 </table>
             <!-- </div> -->
@@ -49,8 +50,8 @@
                     <tr>
                         <td>Cycle Time</td>
                         <td id="ct1"></td>
-                        <td id="ct2"></td>
-                    </tr>
+<!--                         <td id="ct2"></td>
+ -->                    </tr>
                 </table>
             <!-- </div> -->
         </div>
@@ -60,8 +61,8 @@
                     <tr>
                         <td>Cycle Elapsed Time</td>
                         <td id="cet1"></td>
-                        <td id="cet2"></td>
-                        <!-- <td>MT</td>
+<!--                         <td id="cet2"></td>
+ -->                        <!-- <td>MT</td>
                         <td>YR</td> -->
                     </tr>
                 </table>
@@ -300,7 +301,96 @@
         </div>
 <script type="text/javascript">
         $(document).ready(function(){
-            $("#junction").prop("disabled", true);
+            if (localStorage.getItem("city") != null && localStorage.getItem("junction") != null) {
+                var city = localStorage.getItem("city");
+                var junction = localStorage.getItem("junction");
+                var junction_name = localStorage.getItem("junction_name");
+
+                $("#city").val(city);
+                var idarray = localStorage.getItem("junction_id").split(':');
+                var junctionarray = localStorage.getItem("junction_name").split(':');
+                var dictionary = {};
+
+                for(var i = 0; i < idarray.length-1; i++)
+                {   
+                    dictionary[idarray[i]] =  junctionarray[i];
+                    data = "<option value='"+idarray[i]+"'>"+junctionarray[i]+"</option>";
+                    $("#junction").append(data);   
+                }
+                console.log('dict '+dictionary[junction]);
+                $('#junction option[value='+junction+']').attr('selected','selected');
+
+                $.ajax(
+                        {
+                            type: 'get',
+                            url: "{{traffic_service_url}}"+"junction/?type=2&city="+city+"&junction="+junction,
+                            headers: {'X-Authorization-Token' : "{{request.session.userservice_key}}",
+                                            'content_type':'application/json'},
+                            dataType: 'json',
+                            success : function(data)
+                                    {
+                                        result = data['responseData'];
+                                        console.log(result);
+                                        $("#hr_min").html(result[0]['hour'] + " : " + result[0]['minute']);
+                                        $("#day").html(result[0]['day'] + '/'+result[0]['month']+'/'+result[0]['year']);
+                                        // $("#month").html(result[0]['month']);
+                                        // $("#year").html(result[0]['year']);
+                                        $("#ct1").html(result[0]['total_cycle_time1']+''+result[0]['total_cycle_time2']);
+                                        // $("#ct2").html(result[0]['total_cycle_time2']);
+                                        $("#cet1").html(result[0]['cycle_elased_time1']+''+result[0]['cycle_elased_time2']);
+                                        // $("#cet2").html(result[0]['cycle_elased_time2']);
+                                        if(result[0]['mode'] =="02"){
+                                            $("#mode").html("AUTO");
+                                        }
+                                        else{
+                                            $("#mode").html("MANUAL");   
+                                        }
+                                        if(result[0]['working_on'] == "01"){
+                                            $("#working_on").html("OFF");   
+                                        }
+                                        else if(result[0]['working_on'] == "02"){
+                                            $("#working_on").html("BLINKER");  
+                                        }
+                                        else{
+                                            $("#working_on").html("SIGNAL");  
+                                        }
+                                        for(i=0;i<8;i++){
+                                            $("#road"+(i+1)).html("<b>"+result[0]['road'+(i+1)]+"</b>");
+                                            $("#nt"+(i+1)).html("<b>"+result[0]['phase'+(i+1)]+"</b>");    
+                                        }
+                                        $("#nt"+result[0]['phase_no']).html("<b>"+result[0]['normal_time']+"</b>");
+                                        $("#set"+result[0]['phase_no']).html("<b>"+result[0]['step_elased_time']+"</b>");
+                                        if(result[0]['status'] == "02"){
+                                            $("#status"+result[0]['phase_no']).html("<i class='fa fa-circle fa-3x' aria-hidden='true' style='color: #FFC200;'></i><h4 style='color: #FFC200;'>Amber</h4>");
+                                        }else if(result[0]['status'] == "03") {
+                                             $("#status"+result[0]['phase_no']).html("<i class='fa fa-circle fa-3x' aria-hidden='true' style='color: green;'></i><h4 style='color: green;'>Green</h4>");
+                                        }else{
+                                            $("#status"+result[0]['phase_no']).html("<i class='fa fa-circle fa-3x' aria-hidden='true' style='color: red;'></i><h4 style='color: red;'>Red</h4>");
+                                        }
+                                        // $("#road1").html("<b>"+result[0]['road1']+"</b>");
+                                        // $("#road2").html("<b>"+result[0]['road2']+"</b>");
+                                        // $("#road3").html("<b>"+result[0]['road3']+"</b>");
+                                        // $("#road4").html("<b>"+result[0]['road4']+"</b>");
+                                        // $("#road5").html("<b>"+result[0]['road5']+"</b>");
+                                        // $("#road6").html("<b>"+result[0]['road6']+"</b>");
+                                        // $("#road7").html("<b>"+result[0]['road7']+"</b>");
+                                        // $("#road8").html("<b>"+result[0]['road8']+"</b>");
+                                        // for(i=0;i<result.length;i++){
+                                        //     data = "<option value='"+result[i]['junction_id']+"'>"+result[i]['junction_name']+"</option>";
+                                        //     $("#junction").append(data);
+                                        // }
+                                        
+                                    },
+                                    error : function(error)
+                                    {
+                                        window.alert(error);
+                                    },
+                        });
+                }   
+        
+
+
+            // $("#junction").prop("disabled", true);
             $(".ac_city").autocomplete({
                 source: function(request, response) {
                     
@@ -331,6 +421,8 @@
                             $("#city").focus();
                         }
                         var city = $("#city").val();
+                        var junction_name = "";
+                        var junction_id = "";
                         $.ajax(
                         {
                             type: 'get',
@@ -344,9 +436,15 @@
                                         console.log(result);
                                         for(i=0;i<result.length;i++){
                                             data = "<option value='"+result[i]['junction_id']+"'>"+result[i]['junction_name']+"</option>";
+                                        
+                                            junction_id+=(result[i]['junction_id'])+":";
+                                            junction_name+=(result[i]['junction_name'])+":";
+
                                             $("#junction").append(data);
                                         }
-                                        
+                                        localStorage.setItem("junction_id", junction_id);
+                                        localStorage.setItem("junction_name", junction_name);
+
                                     },
                                     error : function(error)
                                     {
@@ -405,7 +503,9 @@
                                 }
                     });
                 });
-
+            $("#log_out").click(function(){
+                localStorage.clear();
+            });
             $("#save_junction").click(function(){
                 var errors=[];
                 var city_name = $("#select_city").val();
@@ -535,6 +635,9 @@
                 var errors =[];
                 var city = $("#city").val();
                 var junction = $("#junction").val();
+                localStorage.setItem("city", city);
+                localStorage.setItem("junction", junction);
+
                 $("#city").css({"border-color": "#ccc"});
                 $("#junction").css({"border-color": "#ccc"});
                 if (city.length == 0) {
@@ -564,13 +667,13 @@
                                         result = data['responseData'];
                                         console.log(result);
                                         $("#hr_min").html(result[0]['hour'] + " : " + result[0]['minute']);
-                                        $("#day").html(result[0]['day']);
-                                        $("#month").html(result[0]['month']);
-                                        $("#year").html(result[0]['year']);
-                                        $("#ct1").html(result[0]['total_cycle_time1']);
-                                        $("#ct2").html(result[0]['total_cycle_time2']);
-                                        $("#cet1").html(result[0]['cycle_elased_time1']);
-                                        $("#cet2").html(result[0]['cycle_elased_time2']);
+                                        $("#day").html(result[0]['day'] + '/'+result[0]['month']+'/'+result[0]['year']);
+                                        // $("#month").html(result[0]['month']);
+                                        // $("#year").html(result[0]['year']);
+                                        $("#ct1").html(result[0]['total_cycle_time1']+''+result[0]['total_cycle_time2']);
+                                        // $("#ct2").html(result[0]['total_cycle_time2']);
+                                        $("#cet1").html(result[0]['cycle_elased_time1']+''+result[0]['cycle_elased_time2']);
+                                        // $("#cet2").html(result[0]['cycle_elased_time2']);
                                         if(result[0]['mode'] =="02"){
                                             $("#mode").html("AUTO");
                                         }
@@ -592,11 +695,12 @@
                                         }
                                         $("#nt"+result[0]['phase_no']).html("<b>"+result[0]['normal_time']+"</b>");
                                         $("#set"+result[0]['phase_no']).html("<b>"+result[0]['step_elased_time']+"</b>");
-                                        if(result[0]['status'] == "03"){
-                                            $("#status"+result[0]['phase_no']).html("<i class='fa fa-circle fa-3x' aria-hidden='true' style='color: green;'></i><h4 style='color: green;'>Green</h4>");
-                                        }
-                                        else{
+                                        if(result[0]['status'] == "02"){
                                             $("#status"+result[0]['phase_no']).html("<i class='fa fa-circle fa-3x' aria-hidden='true' style='color: #FFC200;'></i><h4 style='color: #FFC200;'>Amber</h4>");
+                                        }else if(result[0]['status'] == "03") {
+                                             $("#status"+result[0]['phase_no']).html("<i class='fa fa-circle fa-3x' aria-hidden='true' style='color: green;'></i><h4 style='color: green;'>Green</h4>");
+                                        }else{
+                                            $("#status"+result[0]['phase_no']).html("<i class='fa fa-circle fa-3x' aria-hidden='true' style='color: red;'></i><h4 style='color: red;'>Red</h4>");
                                         }
                                         // $("#road1").html("<b>"+result[0]['road1']+"</b>");
                                         // $("#road2").html("<b>"+result[0]['road2']+"</b>");
@@ -616,8 +720,9 @@
                                     {
                                         window.alert(error);
                                     },
-                        });
+                        }); 
             });
+
 
             function reportErrorsModal(errors){
                                 $('.errors_modal').empty();
